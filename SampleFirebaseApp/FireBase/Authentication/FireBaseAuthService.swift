@@ -218,3 +218,43 @@ extension FireBaseAuthService {
         }
     }
 }
+
+
+extension FireBaseAuthService {
+    func isUserLoggedIn(completion: @escaping (Bool, String?) -> ()) {
+        // Check if the user's email matches the saved email in UserDefaults
+        if Auth.auth().currentUser?.email == UserDefaults.standard.loginUser?.email {
+            if let user = Auth.auth().currentUser {
+                refreshUserToken(user) {
+                    // User is valid and authenticated
+                    UserDefaults.isLoggedIn = true
+                    Indicator.hide()
+                    completion(true, nil) // No error, user is logged in
+                } failure: { error in
+                    UserDefaults.standard.loginUser = nil
+                    UserDefaults.isLoggedIn = false
+                    Indicator.hide()
+                    completion(false, error) // Pass error as string
+                }
+            }
+        } else {
+            // Handle mismatch or no user logged in
+            UserDefaults.standard.loginUser = nil
+            UserDefaults.isLoggedIn = false
+            Indicator.hide()
+            completion(false, "Authentication mismatch or no user found. Please log in again.") // Pass failure message
+        }
+    }
+
+    func refreshUserToken(_ user: User, completion: @escaping () -> (), failure: @escaping (String) -> ()) {
+        user.getIDTokenForcingRefresh(true) { (token, error) in
+            if let error = error {
+                print("Token refresh failed: \(error.localizedDescription)")
+                failure("\(error.localizedDescription)") // Pass the error as a string
+            } else {
+                print("Token refreshed successfully.")
+                completion() // No error
+            }
+        }
+    }
+}

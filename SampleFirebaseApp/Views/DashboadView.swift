@@ -275,27 +275,39 @@ struct DashboadView: View {
             
         }
         .onAppear{
-            Indicator.show()
-            if viewModel.allJournalData.isEmpty {
-                
-                Task(priority: .background) {
-                    FBDataStore.shared.getAllJournalDocuments(for: UserDefaults.standard.loginUser?.uid ?? ""){ journalModal in
-                        viewModel.allJournalData = journalModal ?? []
+            
+            FireBaseAuthService.shared.isUserLoggedIn { isLoggedIn, error in
+                if isLoggedIn {
+                    Indicator.show()
+                    if viewModel.allJournalData.isEmpty {
+                        
+                        Task(priority: .background) {
+                            FBDataStore.shared.getAllJournalDocuments(for: UserDefaults.standard.loginUser?.uid ?? ""){ journalModal in
+                                viewModel.allJournalData = journalModal ?? []
+                            }
+                        }
                     }
+                    else {
+                        print("Data is there")
+                        Indicator.hide()
+                    }
+                    
+//                    FireBaseAuthService.shared.generateRandomizedJournalData(userId: UserDefaults.standard.loginUser?.uid ?? "", numberOfEntries: 50)
+                }
+                else {
+                    DispatchQueue.main.async{
+                        viewModel.isShowingDashboardView = false
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5){
+                        Alert.show(title: "Error", message: "\(error!)")
+                    }
+                   
                 }
             }
-            else {
-                print("Data is there")
-                Indicator.hide()
-            }
             
             
             
-           print(" \(selectedColor)")
-            
-//            FireBaseAuthService.shared.generateRandomizedJournalData(userId: UserDefaults.standard.loginUser?.uid ?? "", numberOfEntries: 100)
-            
-            
+           
             
         }
         .navigationBarBackButtonHidden(true)
