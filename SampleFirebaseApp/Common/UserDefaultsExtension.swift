@@ -55,17 +55,13 @@ extension UserDefaults {
 }
 
 extension UserDefaults {
-    static let predefinedColors: [Color] = [
-        Color.cyan, Color.yellow, Color.blue, Color.purple, Color.brown,
-        Color.orange, Color.gray, Color.indigo, Color.mint, Color.pink, Color.teal
-        ]
     class var themeColor: Color {
           get {
               let index = UserDefaults.standard.integer(forKey: UserDefaultsKey.kAppThemeColor)
-              return predefinedColors[index]
+              return Constants.predefinedColors[index]
           }
           set {
-              if let index = predefinedColors.firstIndex(of: newValue) {
+              if let index = Constants.predefinedColors.firstIndex(of: newValue) {
                   UserDefaults.standard.set(index, forKey: UserDefaultsKey.kAppThemeColor)
               }
           }

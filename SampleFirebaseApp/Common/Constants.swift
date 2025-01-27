@@ -14,3 +14,14 @@ extension Notification.Name {
     static let showAlert                    = Notification.Name("showAlert")
     static let showLoader                   = Notification.Name("showLoader")
 }
+
+
+
+
+
+struct Constants {
+    static let predefinedColors: [Color] = [
+        Color.cyan, Color.yellow, Color.blue, Color.purple, Color.brown,
+        Color.orange, Color.gray, Color.indigo, Color.mint, Color.pink, Color.teal,Color.black.opacity(0.8)
+        ]
+}

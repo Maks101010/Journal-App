@@ -526,7 +526,7 @@ struct preloader:View {
 
 
 struct customColorPicker: View {
-    @State var allColors = [Color.orange, Color.yellow, Color.blue, Color.purple, Color.brown, Color.cyan, Color.gray, Color.indigo, Color.mint, Color.pink, Color.teal]
+    @State var allColors = Constants.predefinedColors
     @Binding var selectedColor : Color
     var body: some View {
         VStack {
@@ -674,50 +674,46 @@ struct ComplexShapeView : View {
 
 
 struct commonImageButtonView : View {
-    var ImageName :  String = "plus.circle"
+    var ImageName :  String = "list.clipboard"
     var color = FireBaseAppModel.shared.themeColor
-    var offsetX : CGFloat = 0
-    var offsetY : CGFloat = 0
     var opacity : Double = 1.0
     var scale : Double = 1.0
     var degress : Double = 0
     var width : CGFloat = 50
     var height : CGFloat = 50
+    var text : String = ""
+    var neededText : Bool = true
     var tapAction :  (() -> ()) = {}
     var pressing :  (() -> ()) = {}
     var elsepressing :  (() -> ()) = {}
     var perform:  (() -> ()) = {}
+    @State var trueText:  Bool = false
+    
    
     var body: some View {
         VStack {
-            Image(systemName: ImageName)
-                .resizable()
-                .frame(width: width,height: height)
-                .offset( x : offsetX , y : offsetY)
-                .opacity(opacity)
-                .scaleEffect(scale)
-                .rotationEffect(Angle(degrees: degress))
-                .foregroundStyle(color)
-                .onTapGesture {
-                    tapAction()
+            HStack {
+                Image(systemName: ImageName)
+                    .resizable()
+                    .frame(width: width,height: height)
+                    .rotationEffect(Angle(degrees: degress))
+                    
+                if   neededText {
+                    Text(text)
+                        .padding(.trailing)
+                        .minimumScaleFactor(0.5)
                 }
-                .onLongPressGesture(minimumDuration: 0.5, pressing: { isPress in
-                    if isPress {
-                        pressing()
-                    }
-                    else {
-                        elsepressing()
-                    }
-                }, perform: {
-                    perform()
-                })
-        }
+                
+            }
+            .opacity(opacity)
+            .scaleEffect(scale)
+            .foregroundStyle(color)
+            .onTapGesture {
+                tapAction()
+            }
+//            .background( neededText ? color : Color.clear , in : RoundedRectangle(cornerRadius: 30).stroke(lineWidth: 3))
+            
+            }
+            
     }
-}
-
-
-
-
-#Preview{
-    commonImageButtonView()
 }

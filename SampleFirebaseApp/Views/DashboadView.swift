@@ -96,140 +96,80 @@ struct DashboadView: View {
             }
                 .scrollDisabled(isMenuOpen)
                 VStack {
-                    if isLongPressButton != "" {
-                        ComplexShapeView(
-                            text: isLongPressButton == "List" ? "History" : isLongPressButton == "Entry" ? "New Entry" : isLongPressButton == "Profile" ? "Profile" : isLongPressButton == "Trades" ? "All Trades" : "",
-                            offsetX: isLongPressButton == "List" ?  -85.0 : isLongPressButton == "Entry" ?  -35 : isLongPressButton == "Profile" ? 25 : isLongPressButton == "Trades" ? 85 : 0
-                        )
-                            .padding(.bottom)
-                    }
-                    
-                    
                     HStack {
-                        commonImageButtonView(ImageName: "list.clipboard",
+                        commonImageButtonView(ImageName: "document.circle",
                                               color : viewModel.allJournalData.isEmpty ? Color.gray : isMenuOpen ? viewModel.themeColor : viewModel.themeColor.opacity(0.5) ,
-                                              offsetX: !isMenuOpen ? 90 : 0,
-                                              offsetY: !isMenuOpen ?  60 : 0,
                                               opacity: isMenuOpen ? 1 : 0,
-                                              scale:  isMenuOpen ? isLongPressButton == "List" ? 1.1 : 0.8 : 1,
-                                              width: 40,
+                                              scale:  isMenuOpen ?  0.9 : 0.2,
+                                              degress: isMenuOpen ? 0 : 200,
+                                              text : "History",
                                               tapAction: {
-                                                    withAnimation(){
-                                                        isMenuOpen = false
-                                                    }
-                                                    isLongPressButton = ""
-                                                    isPastRecordsOpen = true
-                                                    },
-                                              pressing: {
-                                                    isLongPressButton = "List"
-                                                    },
-                                              elsepressing: {
-                                                    isLongPressButton = ""
-                                                    },
-                                              perform: {
-                                                    withAnimation(){
-                                                        isMenuOpen = false
-                                                    }
-                                                    isLongPressButton = ""
-                                                    isPastRecordsOpen = true
-                                                }
+                            withAnimation(){
+                                isMenuOpen = false
+                            }
+                            isPastRecordsOpen = true
+                        }
                                               
                         )
                         .disabled(viewModel.allJournalData.isEmpty)
                         commonImageButtonView(ImageName: "plus.circle.dashed",
                                               color :  isMenuOpen ? viewModel.themeColor : viewModel.themeColor.opacity(0.5) ,
-                                              offsetX: !isMenuOpen ? 25 : 0,
-                                              offsetY: !isMenuOpen ?  60 : 0,
                                               opacity: isMenuOpen ? 1 : 0,
-                                              scale:  isMenuOpen ? isLongPressButton == "Entry" ? 1.1 : 0.8 : 1,
+                                              scale:  isMenuOpen ?  0.9 : 0.2,
+                                              degress: isMenuOpen ? 0 : 200,
+                                              text : "New Entry",
                                               tapAction: {
-                                                    withAnimation(){
-                                                        isMenuOpen = false
-                                                    }
-                                                    isLongPressButton = ""
-                                                    isTradeJournelOpen = true
-                                                    },
-                                              pressing: {
-                                                    isLongPressButton = "Entry"
-                                                    },
-                                              elsepressing: {
-                                                    isLongPressButton = ""
-                                                    },
-                                              perform: {
-                                                    withAnimation(){
-                                                        isMenuOpen = false
-                                                    }
-                                                    isLongPressButton = ""
-                                                    isTradeJournelOpen = true
-                                                        }
+                            withAnimation(){
+                                isMenuOpen = false
+                            }
+                            isTradeJournelOpen = true
+                        }
                         )
+                    }
+                    .offset(x : isMenuOpen ? 0 : 350)
+                    HStack {
                         
                         
                         commonImageButtonView(ImageName: "person.circle",
                                               color :  isMenuOpen ? viewModel.themeColor : viewModel.themeColor.opacity(0.5) ,
-                                              offsetX: !isMenuOpen ? -25 : 0,
-                                              offsetY: !isMenuOpen ?  60 : 0,
                                               opacity: isMenuOpen ? 1 : 0,
-                                              scale:  isMenuOpen ? isLongPressButton == "Profile" ? 1.1 : 0.8 : 1,
+                                              scale:  isMenuOpen ?  0.9 : 0.2,
+                                              degress: isMenuOpen ? 0 : 200,
+                                              text : "Profile",
                                               tapAction: {
                                                     withAnimation(){
                                                         isMenuOpen = false
                                                     }
-                                                    isLongPressButton = ""
+                                                   
                                                     isProfileShown = true
-                                                    },
-                                              pressing: {
-                                                    isLongPressButton = "Profile"
-                                                    },
-                                              elsepressing: {
-                                                    isLongPressButton = ""
-                                                    },
-                                              perform: {
-                                                    withAnimation(){
-                                                        isMenuOpen = false
                                                     }
-                                                    isLongPressButton = ""
-                                                    isProfileShown = true
-                                                }
                         )
                         
                         commonImageButtonView(ImageName: "folder.circle",
                                               color : viewModel.allJournalData.isEmpty ? Color.gray : isMenuOpen ? viewModel.themeColor : viewModel.themeColor.opacity(0.5) ,
-                                              offsetX: !isMenuOpen ? -90 : 0,
-                                              offsetY: !isMenuOpen ?  60 : 0,
                                               opacity: isMenuOpen ? 1 : 0,
-                                              scale:  isMenuOpen ? isLongPressButton == "Trades" ? 1.1 : 0.8 : 1,
+                                              scale:  isMenuOpen ?  0.9 : 0.2,
+                                              degress: isMenuOpen ? 0 : 200,
+                                              text : "All Trades",
                                               tapAction: {
                                                     withAnimation(){
                                                         isMenuOpen = false
                                                     }
-                                                    isLongPressButton = ""
                                                     isAllTradesClick = true
-                                                    },
-                                              pressing: {
-                                                    isLongPressButton = "Trades"
-                                                    },
-                                              elsepressing: {
-                                                    isLongPressButton = ""
-                                                    },
-                                              perform: {
-                                                    withAnimation(){
-                                                        isMenuOpen = false
                                                     }
-                                                    isLongPressButton = ""
-                                                    isAllTradesClick = true
-                                                }
                         )
                         .disabled(viewModel.allJournalData.isEmpty)
                         
                     }
-                    .frame(maxWidth:.infinity)
+                    .offset(x : isMenuOpen ? 0 : -350)
                    
-                    commonImageButtonView(ImageName: "plus.circle", color : !isMenuOpen ? viewModel.themeColor : Color.gray , scale: isMenuOpen ? 0.6 : 1.2, degress: isMenuOpen ? 135 : 0 , tapAction: {
-                        withAnimation(.bouncy(duration: 0.5,extraBounce: 0.2).delay(0.1)){
+                    commonImageButtonView(ImageName: "plus.circle", color : !isMenuOpen ? viewModel.themeColor : Color.gray , scale: isMenuOpen ? 0.6 : 1.2, degress: isMenuOpen ? 135 : 0 , neededText: false , tapAction: {
+                        withAnimation(.easeInOut){
                             isMenuOpen.toggle()
                         }
+                        
                     })
+                    
                        
 
 

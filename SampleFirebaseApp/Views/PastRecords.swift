@@ -197,5 +197,4 @@ struct backgroundChartView : View {
                     ]
                     return mockModel
                 }())
-            
 }
