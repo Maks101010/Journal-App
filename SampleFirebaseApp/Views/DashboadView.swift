@@ -27,20 +27,20 @@ struct DashboadView: View {
     var body: some View {
         VStack {
             ZStack (alignment: .bottom){
-                ScrollView {
-
                 if viewModel.allJournalData.isEmpty {
-                    VStack {
-                        Text("No data is there")
-                    }
-                    .frame(maxWidth: .infinity)
-                    
+                 
+                    NoDataFound()
+                        .disabled(isMenuOpen)
+                        .blur(radius: isMenuOpen ? 10 : 0)
+                        .frame(maxWidth: .infinity)
+                        .frame(maxHeight: .infinity)
                 }
                 else {
+                ScrollView {
                     VStack {
                         
                         mainCardView(journalData: viewModel.allJournalData, action: {isTradeChartShown = true}, successfullTrades: totalSuccessTrades(), totalPAndL: totalPAndL())
-                            
+                        
                         Spacer(minLength: 100)
                         HStack {
                             CommonText(title: "Top Trades")
@@ -56,45 +56,46 @@ struct DashboadView: View {
                         
                         
                         ForEach(viewModel.allJournalData.reversed()
-                                    .prefix(5), id: \.id) { i in  // Get only the top 3 items
-                            mainView(
-                                tradeName: i.tradeName ?? "",
-                                pAndL: i.totalPAndL ?? 0,
-                                invested: i.investedAmount ?? 0,
-                                entryQty: i.entryQuantity ?? 0,
-                                entryPrice: i.entryPrice ?? 0,
-                                exitQty: i.exitQuantity ?? 0,
-                                exitPrice: i.exitPrice ?? 0,
-                                createdDate: i.createDate ?? ""
-                            )
-                            .blur(radius: isLongPress == nil ? 0 : isLongPress == i.id ? 0 : 3)
-                            .scaleEffect(isLongPress == nil ? 1 : isLongPress == i.id ? 1.05 : 1.0)
-                            .animation(.spring(response: 0.4, dampingFraction: 0.5, blendDuration: 0.5), value: isLongPress) // Spring animation
-                            .onLongPressGesture(minimumDuration: 1, pressing: { isPress in
-                                if isPress {
-                                    isLongPress = i.id
-                                }
-                                else {
+                            .prefix(5), id: \.id) { i in  // Get only the top 3 items
+                                mainView(
+                                    tradeName: i.tradeName ?? "",
+                                    pAndL: i.totalPAndL ?? 0,
+                                    invested: i.investedAmount ?? 0,
+                                    entryQty: i.entryQuantity ?? 0,
+                                    entryPrice: i.entryPrice ?? 0,
+                                    exitQty: i.exitQuantity ?? 0,
+                                    exitPrice: i.exitPrice ?? 0,
+                                    createdDate: i.createDate ?? ""
+                                )
+                                .blur(radius: isLongPress == nil ? 0 : isLongPress == i.id ? 0 : 3)
+                                .scaleEffect(isLongPress == nil ? 1 : isLongPress == i.id ? 1.05 : 1.0)
+                                .animation(.spring(response: 0.4, dampingFraction: 0.5, blendDuration: 0.5), value: isLongPress) // Spring animation
+                                .onLongPressGesture(minimumDuration: 1, pressing: { isPress in
+                                    if isPress {
+                                        isLongPress = i.id
+                                    }
+                                    else {
+                                        isLongPress = nil
+                                    }
+                                }, perform: {
+                                    selectedJournal = i
+                                    isTradeDetailsOpen = true
                                     isLongPress = nil
+                                })
+                                .onTapGesture {
+                                    selectedJournal = i
+                                    isTradeDetailsOpen = true
                                 }
-                            }, perform: {
-                                selectedJournal = i
-                                isTradeDetailsOpen = true
-                                isLongPress = nil
-                            })
-                            .onTapGesture {
-                                selectedJournal = i
-                                isTradeDetailsOpen = true
+                                //                            .disabled(isMenuOpen)
                             }
-//                            .disabled(isMenuOpen)
-                        }
                     }
                     .disabled(isMenuOpen)
                     .padding()
                     .blur(radius: isMenuOpen ? 10 : 0)
+                    
                 }
-            }
                 .scrollDisabled(isMenuOpen)
+            }
                 VStack {
                     HStack {
                         commonImageButtonView(ImageName: "document.circle",
@@ -164,7 +165,7 @@ struct DashboadView: View {
                     .offset(x : isMenuOpen ? 0 : -350)
                    
                     commonImageButtonView(ImageName: "plus.circle", color : !isMenuOpen ? viewModel.themeColor : Color.gray , scale: isMenuOpen ? 0.6 : 1.2, degress: isMenuOpen ? 135 : 0 , neededText: false , tapAction: {
-                        withAnimation(.easeInOut){
+                        withAnimation(.bouncy(duration: 0.75,extraBounce: 0.1)){
                             isMenuOpen.toggle()
                         }
                          
@@ -215,9 +216,10 @@ struct DashboadView: View {
             
         }
         .onAppear{
-            
+            viewModel.allJournalData = []
             FireBaseAuthService.shared.isUserLoggedIn { isLoggedIn, error in
                 if isLoggedIn {
+                    
                     Indicator.show()
                     if viewModel.allJournalData.isEmpty {
                         
@@ -342,15 +344,13 @@ struct DashboadView: View {
         .alert(isPresented: $isAlertShown) {
             Alert(title: Text("Are you sure you want to Logout?") , message: Text("") , primaryButton: .cancel(), secondaryButton: .destructive( Text("Logout"), action: {
                 FireBaseAuthService.shared.logoutUser() {
-                    viewModel.allJournalData = []
+                   
                     UserDefaults.isLoggedIn = false
                     viewModel.isShowingDashboardView = false
                 }
             }))
         }
-        .onAppear {
-            
-        }
+        
         
     }
 }

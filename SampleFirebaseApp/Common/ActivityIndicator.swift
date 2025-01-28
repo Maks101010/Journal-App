@@ -32,9 +32,11 @@ struct ActivityIndicatorExt: ViewModifier {
         
         ZStack {
             content
+                .blur(radius: show ? 10 : 0)
             if self.show {
-                Color.gray.opacity(0.1)
+                Color.black.opacity(0.1)
                     .ignoresSafeArea()
+                    
                 
                 VStack(spacing: 0.0) {
                     

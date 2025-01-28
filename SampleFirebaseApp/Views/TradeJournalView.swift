@@ -37,7 +37,9 @@ struct TradeJournalView : View {
                         }
                     }
                     TextFieldView(placeholder: "Trade Name", text: $tradeName)
-                        .textCase(.uppercase)
+                        .onChange(of: tradeName ) {
+                            tradeName = tradeName.uppercased()
+                        }
                     TextFieldView(placeholder: "Entry Quantity", text: $enterQunatity)
                         .keyboardType(.numberPad)
                     TextFieldView(placeholder: "Entry Price", text: $entryPrice)

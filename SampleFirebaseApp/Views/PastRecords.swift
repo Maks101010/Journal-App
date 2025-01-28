@@ -38,33 +38,48 @@ struct PastRecords: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack() {
-                ForEach(groupedData.keys.sorted(), id: \.self) { tradeName in
-                    if let trades = groupedData[tradeName] {
-                        let overallInvested = trades.reduce(0) { $0 + ($1.investedAmount ?? 0) }
-                        let overallPandL = trades.reduce(0) { $0 + ($1.totalPAndL ?? 0) }
-                        let successfulTrades = trades.filter { trade in
-                            let pAndL = trade.totalPAndL ?? 0
-                            return pAndL > 0
-                        }.count
-                        let totalTrades = trades.count
-                        
-                        cardView(
-                            companyTrades: trades,
-                            tradeName: tradeName,
-                            overallInvested: overallInvested,
-                            overallPandL: overallPandL,
-                            successfulTrades: ( ( Double (successfulTrades) /  Double(totalTrades) ) )
-                        )
-                        .onTapGesture{
-                            SelectedCompanyModel = trades
-                            isChartListShown = true
-                        }
-                    }
+        Group {
+        if groupedData.isEmpty {
+                VStack{
+                    NoDataFound()
                 }
             }
-            .padding()
+            else {
+                
+                
+                ScrollView {
+                    VStack() {
+                        
+                        
+                        
+                        
+                        ForEach(groupedData.keys.sorted(), id: \.self) { tradeName in
+                            if let trades = groupedData[tradeName] {
+                                let overallInvested = trades.reduce(0) { $0 + ($1.investedAmount ?? 0) }
+                                let overallPandL = trades.reduce(0) { $0 + ($1.totalPAndL ?? 0) }
+                                let successfulTrades = trades.filter { trade in
+                                    let pAndL = trade.totalPAndL ?? 0
+                                    return pAndL > 0
+                                }.count
+                                let totalTrades = trades.count
+                                
+                                cardView(
+                                    companyTrades: trades,
+                                    tradeName: tradeName,
+                                    overallInvested: overallInvested,
+                                    overallPandL: overallPandL,
+                                    successfulTrades: ( ( Double (successfulTrades) /  Double(totalTrades) ) )
+                                )
+                                .onTapGesture{
+                                    SelectedCompanyModel = trades
+                                    isChartListShown = true
+                                }
+                            }
+                        }
+                    }
+                    .padding()
+                }
+            }
         }
         .searchable(text: $searchText, prompt: "Search")
         .navigationTitle("Trade history")

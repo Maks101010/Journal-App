@@ -54,7 +54,6 @@ struct ProfileView : View {
                                         FireBaseAuthService.shared.Updatepassword(userId: UserDefaults.standard.loginUser?.uid ?? "", name: name, gender: gender, email: email, password: password) { userModel in
                                             FireBaseAuthService.shared.logoutUser() {
                                                 viewModel.isShowingDashboardView = false
-                                                viewModel.allJournalData = []
                                                 UserDefaults.isLoggedIn = false
                                                 NavigationUtil.popToRootView()
                                             }

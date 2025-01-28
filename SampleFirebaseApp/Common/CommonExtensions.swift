@@ -717,3 +717,34 @@ struct commonImageButtonView : View {
             
     }
 }
+
+
+
+struct NoDataFound : View {
+    @State var isAnimate : Double = 0.0
+    var body: some View {
+        VStack{
+            Image(systemName: "exclamationmark.triangle")
+                .resizable()
+                .frame(width: 100,height: 100)
+                .symbolEffect(.bounce, value: isAnimate)
+                .onTapGesture {
+                    isAnimate = Double.random(in: 0...1)
+                }.padding(.bottom,20)
+            
+            Text("NO DATA FOUND")
+                .font(.headline)
+                .fontWidth(.expanded)
+        }
+        .foregroundStyle(FireBaseAppModel.shared.themeColor)
+        .onAppear{
+            isAnimate = Double.random(in: 0...1)
+        }
+        
+    }
+}
+
+
+#Preview{
+    NoDataFound()
+}

@@ -71,31 +71,33 @@ struct TradeListView: View {
             Spacer()
             HStack {
                 Spacer()
-                
-                Menu{
-                    Button(action: {
-                        sortOrder = .Profit
-                    }){
-                        Text("Profit")
+                if !filteredTrades.isEmpty {
+                    Menu{
+                        Button(action: {
+                            sortOrder = .Profit
+                        }){
+                            Text("Profit")
+                        }
+                        Button(action: {
+                            sortOrder = .Loss
+                        }){
+                            Text("Loss")
+                        }
+                        Button(action: {
+                            sortOrder = .Latest
+                        }){
+                            Text("Latest")
+                        }
+                        Button(action: {
+                            sortOrder = .Oldest
+                        }){
+                            Text("Oldest")
+                        }
+                    } label: {
+                        Text("Sort by: \(sortOrder)")
                     }
-                    Button(action: {
-                        sortOrder = .Loss
-                    }){
-                        Text("Loss")
-                    }
-                    Button(action: {
-                        sortOrder = .Latest
-                    }){
-                        Text("Latest")
-                    }
-                    Button(action: {
-                        sortOrder = .Oldest
-                    }){
-                        Text("Oldest")
-                    }
-                } label: {
-                    Text("Sort by: \(sortOrder)")
                 }
+                
                 
                 
                 
@@ -104,9 +106,9 @@ struct TradeListView: View {
             
             VStack {
                 if filteredTrades.isEmpty {
-                    ScrollView {
-                        Text("No,Trades Available...")
-                    }
+                    Spacer()
+                    NoDataFound()
+                    Spacer()
                     
                 }
                 else {
