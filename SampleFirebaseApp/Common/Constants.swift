@@ -22,6 +22,6 @@ extension Notification.Name {
 struct Constants {
     static let predefinedColors: [Color] = [
         Color.cyan, Color.yellow, Color.blue, Color.purple, Color.brown,
-        Color.orange, Color.gray, Color.indigo, Color.mint, Color.pink, Color.teal,Color.black.opacity(0.8)
+        Color.orange, Color.gray, Color.indigo, Color.mint, Color.pink, Color.teal
         ]
 }
