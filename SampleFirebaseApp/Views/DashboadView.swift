@@ -216,7 +216,7 @@ struct DashboadView: View {
             
         }
         .onAppear{
-            viewModel.allJournalData = []
+            
             FireBaseAuthService.shared.isUserLoggedIn { isLoggedIn, error in
                 if isLoggedIn {
                     
@@ -344,7 +344,7 @@ struct DashboadView: View {
         .alert(isPresented: $isAlertShown) {
             Alert(title: Text("Are you sure you want to Logout?") , message: Text("") , primaryButton: .cancel(), secondaryButton: .destructive( Text("Logout"), action: {
                 FireBaseAuthService.shared.logoutUser() {
-                   
+                    viewModel.allJournalData = []
                     UserDefaults.isLoggedIn = false
                     viewModel.isShowingDashboardView = false
                 }
